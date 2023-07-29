@@ -1,4 +1,4 @@
-module copolio.com/gobootify
+module copolio.com/gin-bootify
 
 go 1.20
 
