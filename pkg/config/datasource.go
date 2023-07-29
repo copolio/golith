@@ -1,4 +1,4 @@
-package database
+package config
 
 type Datasource struct {
 	Ddl         Ddl    `yaml:"ddl"`
@@ -11,3 +11,10 @@ type Datasource struct {
 	MaxIdleConn int    `yaml:"maxIdleConn"`
 	MaxOpenConn int    `yaml:"maxOpenConn"`
 }
+
+type Ddl string
+
+const (
+	CREATE Ddl = "CREATE"
+	NONE       = "NONE"
+)
