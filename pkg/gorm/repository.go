@@ -1,7 +1,7 @@
 package gorm
 
 import (
-	"copolio.com/gobootify/pkg/database"
+	"copolio.com/gin-bootify/pkg/database"
 	"gorm.io/gorm"
 )
 
