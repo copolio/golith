@@ -1,8 +1,8 @@
 # Gin Bootify
 
-Gin Bootify is a template project for easily building a Go server-side application using Gin. It aims to minimize the
-hassle of creating and configuring Gin applications by providing Gin middlewares, utilities, pre-configurations, and
-integrations to other popular libraries written in Go.
+Gin Bootify is a template project that aims to ease the configuration and building of a Go server-side application using
+Gin. It minimizes the hassle of creating and configuring Gin applications by providing Gin middlewares, utilities,
+pre-configurations, and integrations with other popular libraries written in Go.
 
 ---
 
@@ -21,4 +21,5 @@ by [golang-standards/project-layout](https://github.com/golang-standards/project
 
 ## Questions
 
-For questions and support, do not hesitate to raise an issue on GitHub.
+For questions and support, do not hesitate to raise an issue on GitHub or contact me through
+my [email](rlwjd1504@gmail.com).
