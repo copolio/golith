@@ -6,11 +6,14 @@ import (
 
 func main() {
 	ginApplication := &config.GinApplication{
-		Configuration: &config.Gin{
-			Server: config.Server{
-				Port: 80,
+		Configuration: &config.AutoConfiguration{
+			Gin: config.Gin{
+				Mode: config.DebugMode,
+				Server: config.Server{
+					Port: 8080,
+				},
+				Datasource: config.Datasource{},
 			},
-			Datasource: config.Datasource{},
 		},
 	}
 	ginApplication.Run()

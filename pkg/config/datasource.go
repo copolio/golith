@@ -16,5 +16,5 @@ type Ddl string
 
 const (
 	CREATE Ddl = "CREATE"
-	NONE       = "NONE"
+	NONE   Ddl = "NONE"
 )
