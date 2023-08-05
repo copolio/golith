@@ -4,6 +4,10 @@ import (
 	"github.com/copolio/gin-bootify/pkg"
 	"github.com/copolio/gin-bootify/pkg/config"
 	"github.com/copolio/gin-bootify/pkg/database/ddl"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
+	"log"
 )
 
 func main() {
@@ -21,11 +25,31 @@ func main() {
 					Schema:      "demo",
 					User:        "root",
 					Password:    "test",
-					MaxIdleConn: 0,
-					MaxOpenConn: 0,
+					MaxIdleConn: 10,
+					MaxOpenConn: 10,
+					Charset:     "utf8",
+					ParseTime:   true,
+					Loc:         "Local",
 				},
 			},
 		},
 	}
+	var err error
+	ginApplication.Connection, err = gorm.Open(mysql.Open(ginApplication.Configuration.Gin.Datasource.GetMysqlDSN()), &gorm.Config{
+		DisableForeignKeyConstraintWhenMigrating: true,
+		SkipDefaultTransaction:                   true,
+		Logger:                                   logger.Default.LogMode(logger.Info),
+	})
+
+	if err != nil {
+		log.Fatalf("Error connecting MySQL: %v\n", err)
+	}
+	sqlDB, err := ginApplication.Connection.DB()
+	if err != nil {
+		log.Fatalf("Error retrieving MySQL sql connection: %v\n", err)
+	}
+	sqlDB.SetMaxIdleConns(ginApplication.Configuration.Gin.Datasource.MaxIdleConn)
+	sqlDB.SetMaxOpenConns(ginApplication.Configuration.Gin.Datasource.MaxOpenConn)
+
 	ginApplication.Run()
 }

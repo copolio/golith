@@ -3,6 +3,8 @@ package config
 import (
 	"fmt"
 	"github.com/copolio/gin-bootify/pkg/database/ddl"
+	"strconv"
+	"strings"
 )
 
 type Datasource struct {
@@ -21,6 +23,6 @@ type Datasource struct {
 }
 
 func (c *Datasource) GetMysqlDSN() string {
-	dsn := fmt.Sprintf("%s:%s@%s(%s)/%s?charset=%s&parseTime=%s&loc=%s", c.User, c.Password, c.Protocol, c.Host, c.Schema, c.Charset, c.ParseTime, c.Loc)
+	dsn := fmt.Sprintf("%s:%s@%s(%s)/%s?charset=%s&parseTime=%s&loc=%s", c.User, c.Password, c.Protocol, c.Host, c.Schema, c.Charset, strings.ToTitle(strconv.FormatBool(c.ParseTime)), c.Loc)
 	return dsn
 }
