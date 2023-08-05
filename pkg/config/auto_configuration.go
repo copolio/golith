@@ -1,7 +1,8 @@
 package config
 
 type AutoConfiguration struct {
-	Gin Gin
+	Gin     Gin
+	Swagger Swagger
 }
 
 type Gin struct {

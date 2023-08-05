@@ -1,13 +1,14 @@
-package config
+package pkg
 
 import (
 	"fmt"
+	"github.com/copolio/gin-bootify/pkg/config"
 	"github.com/gin-gonic/gin"
 	"log"
 )
 
 type GinApplication struct {
-	Configuration *AutoConfiguration
+	Configuration *config.AutoConfiguration
 }
 
 func (app *GinApplication) Run() {

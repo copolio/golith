@@ -1,4 +1,4 @@
-module copolio.com/gin-bootify
+module github.com/copolio/gin-bootify
 
 go 1.20
 
