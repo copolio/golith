@@ -1,4 +1,4 @@
-package pkg
+package gin
 
 import (
 	"fmt"
@@ -16,6 +16,7 @@ type GinApplication struct {
 func (app *GinApplication) Run() {
 	gin.SetMode(string(app.Configuration.Gin.Mode))
 	ginApplication := gin.Default()
+	ginApplication.Use(BasicErrorHandler())
 
 	err := ginApplication.Run(fmt.Sprintf(":%d", app.Configuration.Gin.Server.Port))
 	if err != nil {

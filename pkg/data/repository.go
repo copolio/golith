@@ -1,4 +1,4 @@
-package database
+package data
 
 type CrudRepository[T any, K any] interface {
 	WithTransaction(transaction any)

@@ -2,7 +2,7 @@ package config
 
 import (
 	"fmt"
-	"github.com/copolio/gin-bootify/pkg/database/ddl"
+	"github.com/copolio/gin-bootify/pkg/data/ddl"
 	"strconv"
 	"strings"
 )

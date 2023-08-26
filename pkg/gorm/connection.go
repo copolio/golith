@@ -1,5 +1,0 @@
-package gorm
-
-func ConnectDb() {
-
-}

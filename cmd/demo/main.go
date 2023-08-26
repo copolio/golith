@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/copolio/gin-bootify/pkg"
 	"github.com/copolio/gin-bootify/pkg/config"
-	"github.com/copolio/gin-bootify/pkg/database/ddl"
+	"github.com/copolio/gin-bootify/pkg/data/ddl"
+	"github.com/copolio/gin-bootify/pkg/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	ginApplication := &pkg.GinApplication{
+	ginApplication := &gin.GinApplication{
 		Configuration: &config.AutoConfiguration{
 			Gin: config.Gin{
 				Mode: config.DebugMode,
@@ -35,11 +35,13 @@ func main() {
 		},
 	}
 	var err error
-	ginApplication.Connection, err = gorm.Open(mysql.Open(ginApplication.Configuration.Gin.Datasource.GetMysqlDSN()), &gorm.Config{
-		DisableForeignKeyConstraintWhenMigrating: true,
-		SkipDefaultTransaction:                   true,
-		Logger:                                   logger.Default.LogMode(logger.Info),
-	})
+	ginApplication.Connection, err = gorm.Open(
+		mysql.Open(ginApplication.Configuration.Gin.Datasource.GetMysqlDSN()),
+		&gorm.Config{
+			DisableForeignKeyConstraintWhenMigrating: true,
+			SkipDefaultTransaction:                   true,
+			Logger:                                   logger.Default.LogMode(logger.Info),
+		})
 
 	if err != nil {
 		log.Fatalf("Error connecting MySQL: %v\n", err)
