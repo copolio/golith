@@ -45,7 +45,7 @@ func TestErrorHandler(t *testing.T) {
 			// given
 			// when
 			_ = tt.args.c.Error(tt.err)
-			BasicErrorHandler(tt.args.c)
+			BasicErrorHandler()(tt.args.c)
 			got := tt.args.c.Errors.Last()
 			// then
 			var want ResponseStatusError
