@@ -1,10 +1,7 @@
 package config
 
 import (
-	"fmt"
 	"github.com/copolio/gin-bootify/pkg/data/ddl"
-	"strconv"
-	"strings"
 )
 
 type Datasource struct {
@@ -22,7 +19,18 @@ type Datasource struct {
 	Loc         string  `yaml:"loc"`
 }
 
-func (c *Datasource) GetMysqlDSN() string {
-	dsn := fmt.Sprintf("%s:%s@%s(%s)/%s?charset=%s&parseTime=%s&loc=%s", c.User, c.Password, c.Protocol, c.Host, c.Schema, c.Charset, strings.ToTitle(strconv.FormatBool(c.ParseTime)), c.Loc)
-	return dsn
+func DefaultDatasource() Datasource {
+	return Datasource{
+		Ddl:         ddl.NONE,
+		Host:        "localhost:3306",
+		Protocol:    "tcp",
+		Schema:      "demo",
+		User:        "root",
+		Password:    "test",
+		MaxIdleConn: 10,
+		MaxOpenConn: 10,
+		Charset:     "utf8",
+		ParseTime:   true,
+		Loc:         "Local",
+	}
 }
