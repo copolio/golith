@@ -1,4 +1,4 @@
-package config
+package gorm
 
 import (
 	"github.com/copolio/gin-bootify/pkg/data/ddl"

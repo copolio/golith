@@ -1,6 +1,6 @@
-package config
+package swag
 
-type SwaggerConfiguration struct {
+type Configuration struct {
 	Use         bool
 	Path        string
 	Title       string
@@ -8,8 +8,8 @@ type SwaggerConfiguration struct {
 	Version     string
 }
 
-func DefaultSwaggerConfiguration() SwaggerConfiguration {
-	return SwaggerConfiguration{
+func DefaultConfiguration() Configuration {
+	return Configuration{
 		Use:         false,
 		Path:        "",
 		Title:       "",
