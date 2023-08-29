@@ -1,13 +1,10 @@
 package main
 
 import (
-	"github.com/copolio/gin-bootify/pkg/config"
-	"github.com/copolio/gin-bootify/pkg/gin"
+	"github.com/copolio/gin-bootify/pkg/web"
 )
 
 func main() {
-	ginApplication := &gin.Application{
-		Configuration: config.DefaultAutoConfiguration(),
-	}
-	ginApplication.Run()
+	application := web.GetApplication()
+	application.Start()
 }
