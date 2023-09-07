@@ -1,9 +1,9 @@
 package core
 
 import (
-	"github.com/copolio/gin-bootify/pkg/gin"
-	"github.com/copolio/gin-bootify/pkg/gorm"
-	"github.com/copolio/gin-bootify/pkg/swag"
+	"github.com/copolio/golith/pkg/gin"
+	"github.com/copolio/golith/pkg/gorm"
+	"github.com/copolio/golith/pkg/swag"
 )
 
 type Configuration struct {

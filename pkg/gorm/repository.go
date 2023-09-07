@@ -1,8 +1,8 @@
 package gorm
 
 import (
-	"github.com/copolio/gin-bootify/pkg/data"
-	"github.com/copolio/gin-bootify/pkg/web"
+	"github.com/copolio/golith/pkg/data"
+	"github.com/copolio/golith/pkg/web"
 	"gorm.io/gorm"
 )
 

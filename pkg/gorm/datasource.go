@@ -1,7 +1,7 @@
 package gorm
 
 import (
-	"github.com/copolio/gin-bootify/pkg/data/ddl"
+	"github.com/copolio/golith/pkg/data/ddl"
 )
 
 type Datasource struct {

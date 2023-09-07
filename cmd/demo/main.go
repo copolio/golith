@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/copolio/gin-bootify/pkg/web"
+	"github.com/copolio/golith/pkg/web"
 )
 
 func main() {

@@ -1,6 +1,6 @@
-# Gin Bootify
+# Golith
 
-Gin Bootify is a template project that aims to ease the configuration and building of a Go server-side application using
+Golith is a template project that aims to ease the configuration and building of a Go server-side application using
 Gin. It minimizes the hassle of creating and configuring Gin applications by providing Gin middlewares, utilities,
 pre-configurations, and integrations with other popular libraries written in Go.
 
@@ -8,7 +8,7 @@ pre-configurations, and integrations with other popular libraries written in Go.
 
 ## Features
 
-Gin Bootify is primarily based on [gin-gonic/gin](https://github.com/gin-gonic/gin), with following additional
+Golith is primarily based on [gin-gonic/gin](https://github.com/gin-gonic/gin), with following additional
 dependencies:
 
 - Configuration with [spf13/viper](https://github.com/spf13/viper)

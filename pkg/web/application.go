@@ -2,9 +2,9 @@ package web
 
 import (
 	"fmt"
-	"github.com/copolio/gin-bootify/pkg/core"
-	gin2 "github.com/copolio/gin-bootify/pkg/gin"
-	gorm2 "github.com/copolio/gin-bootify/pkg/gorm"
+	"github.com/copolio/golith/pkg/core"
+	gin2 "github.com/copolio/golith/pkg/gin"
+	gorm2 "github.com/copolio/golith/pkg/gorm"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
