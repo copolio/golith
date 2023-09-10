@@ -39,7 +39,7 @@ func (application Application) Start() {
 func (application Application) initGin() {
 	gin.SetMode(string(application.Configuration.Gin.Mode))
 	r := gin.Default()
-	r.Use(gin2.BasicErrorHandler())
+	r.Use(gin2.HttpErrorHandler())
 
 	err := r.Run(fmt.Sprintf(":%d", application.Configuration.Gin.Server.Port))
 	if err != nil {

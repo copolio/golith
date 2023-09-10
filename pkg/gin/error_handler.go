@@ -10,9 +10,9 @@ import (
 
 type HttpStatus int
 
-var _ error = &ResponseStatusError{}
+var _ error = &HttpError{}
 
-type ResponseStatusError struct {
+type HttpError struct {
 	Timestamp time.Time  `json:"timestamp"`
 	Status    HttpStatus `json:"status"`
 	Meta      any        `json:"meta"`
@@ -20,22 +20,22 @@ type ResponseStatusError struct {
 	Message   string     `json:"message"`
 }
 
-func (r ResponseStatusError) Error() string {
+func (r HttpError) Error() string {
 	return r.Message
 }
 
-func BasicErrorHandler() func(c *gin.Context) {
+func HttpErrorHandler() func(c *gin.Context) {
 	return func(c *gin.Context) {
 		c.Next()
 		for _, err := range c.Errors {
 			log.Default().Printf("Error occurred: %v\n", err)
 		}
 		if len(c.Errors) > 0 {
-			target := ResponseStatusError{}
+			target := HttpError{}
 			if errors.As(c.Errors[0], &target) {
 				c.JSON(int(target.Status), target)
 			} else {
-				statusError := ResponseStatusError{
+				statusError := HttpError{
 					Timestamp: time.Now(),
 					Status:    http.StatusInternalServerError,
 					Meta:      c.Errors,

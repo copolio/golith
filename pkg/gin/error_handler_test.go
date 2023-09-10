@@ -31,7 +31,7 @@ func TestErrorHandler(t *testing.T) {
 			args: args{
 				c: testContext,
 			},
-			err: ResponseStatusError{
+			err: HttpError{
 				Timestamp: time.Now(),
 				Status:    http.StatusBadRequest,
 				Meta:      nil,
@@ -45,10 +45,10 @@ func TestErrorHandler(t *testing.T) {
 			// given
 			// when
 			_ = tt.args.c.Error(tt.err)
-			BasicErrorHandler()(tt.args.c)
+			HttpErrorHandler()(tt.args.c)
 			got := tt.args.c.Errors.Last()
 			// then
-			var want ResponseStatusError
+			var want HttpError
 			if !errors.As(got, &want) {
 				t.Errorf("Error() = %v, err %v", got, want)
 			}
@@ -83,7 +83,7 @@ func TestResponseStatusError_Error(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			r := ResponseStatusError{
+			r := HttpError{
 				Timestamp: tt.fields.Timestamp,
 				Status:    tt.fields.Status,
 				Meta:      tt.fields.Meta,
