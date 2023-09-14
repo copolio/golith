@@ -1,45 +1,44 @@
-package web
+package golith
 
 import (
 	"fmt"
-	"github.com/copolio/golith/pkg/core"
-	gin2 "github.com/copolio/golith/pkg/gin"
-	gorm2 "github.com/copolio/golith/pkg/gorm"
+	"github.com/copolio/golith/pkg/golithgin"
+	"github.com/copolio/golith/pkg/golithgorm"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"log"
 )
 
-var instance *Application
+var instance *WebApplication
 
-type Application struct {
-	Configuration core.Configuration
+type WebApplication struct {
+	Configuration Configuration
 	GormDB        *gorm.DB
 	GinEngine     *gin.Engine
 }
 
-func GetApplication() *Application {
+func GetWebApplication() *WebApplication {
 	if instance != nil {
 		return instance
 	}
-	instance = &Application{
-		Configuration: core.DefaultConfiguration(),
+	instance = &WebApplication{
+		Configuration: DefaultConfiguration(),
 		GormDB:        nil,
 		GinEngine:     nil,
 	}
 	return instance
 }
 
-func (application Application) Start() {
+func (application WebApplication) Start() {
 	application.initGorm()
 	application.initGin()
 }
 
-func (application Application) initGin() {
+func (application WebApplication) initGin() {
 	gin.SetMode(string(application.Configuration.Gin.Mode))
 	r := gin.Default()
-	r.Use(gin2.HttpErrorHandler())
+	r.Use(golithgin.HttpErrorHandler())
 
 	err := r.Run(fmt.Sprintf(":%d", application.Configuration.Gin.Server.Port))
 	if err != nil {
@@ -47,10 +46,10 @@ func (application Application) initGin() {
 	}
 }
 
-func (application Application) initGorm() {
+func (application WebApplication) initGorm() {
 	var err error
 	application.GormDB, err = gorm.Open(
-		mysql.Open(gorm2.GetMysqlDSN(application.Configuration.Gorm.Datasource)),
+		mysql.Open(golithgorm.GetMysqlDSN(application.Configuration.Gorm.Datasource)),
 		&application.Configuration.Gorm.Configuration)
 
 	if err != nil {

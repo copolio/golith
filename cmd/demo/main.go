@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/copolio/golith/pkg/web"
+	"github.com/copolio/golith"
 )
 
 func main() {
-	application := web.GetApplication()
+	application := golith.GetWebApplication()
 	application.Start()
 }

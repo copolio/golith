@@ -1,4 +1,4 @@
-package data
+package golithdata
 
 type CrudRepository[T any, K any] interface {
 	WithTransaction(transaction any)

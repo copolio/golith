@@ -1,12 +1,12 @@
-package gorm
+package golithgorm
 
 import (
-	"github.com/copolio/golith/pkg/data"
+	"github.com/copolio/golith/pkg/golithdata"
 	"gorm.io/gorm"
 )
 
-var _ data.FpCrudRepository[any, any] = &Repository[any, any]{}
-var _ data.CrudRepository[any, any] = &Repository[any, any]{}
+var _ golithdata.FpCrudRepository[any, any] = &Repository[any, any]{}
+var _ golithdata.CrudRepository[any, any] = &Repository[any, any]{}
 
 type Repository[T any, K any] struct {
 	db *gorm.DB

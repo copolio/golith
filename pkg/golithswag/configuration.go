@@ -1,4 +1,4 @@
-package swag
+package golithswag
 
 type Configuration struct {
 	Use         bool
