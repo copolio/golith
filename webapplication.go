@@ -18,7 +18,7 @@ type WebApplication struct {
 	GinEngine     *gin.Engine
 }
 
-func GetWebApplication() *WebApplication {
+func GetWebApplication() (webApplication *WebApplication) {
 	if instance != nil {
 		return instance
 	}

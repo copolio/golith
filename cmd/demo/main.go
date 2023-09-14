@@ -5,6 +5,6 @@ import (
 )
 
 func main() {
-	application := golith.GetWebApplication()
-	application.Start()
+	webApplication := golith.GetWebApplication()
+	webApplication.Start()
 }
