@@ -1,8 +1,9 @@
 # Golith
 
-Golith is a template project that aims to ease the configuration and building of a Go server-side application using
-Gin. It minimizes the hassle of creating and configuring Gin applications by providing Gin middlewares, utilities,
-pre-configurations, and integrations with other popular libraries written in Go.
+Golith is a template project that aims to ease the configuration and building of a Go server-side application based on
+Gin and other
+popular libraries in Go community. It aims to minimize the hassle of creating and configuring Gin applications by
+providing Gin middlewares, utilities, pre-configurations, and integrations with other popular libraries written in Go.
 
 ---
 
@@ -13,7 +14,6 @@ dependencies:
 
 - Configuration with [spf13/viper](https://github.com/spf13/viper)
 - Database Connection with [go-gorm/gorm](https://github.com/go-gorm/gorm)
-- Dependency Injection with [google/wire](https://github.com/google/wire)
 - Document Generation with [swaggo/swag](https://github.com/swaggo/swag)
 
 Directory structure was inspired
