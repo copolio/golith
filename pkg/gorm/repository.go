@@ -2,17 +2,17 @@ package gorm
 
 import (
 	"github.com/copolio/golith/pkg/data"
-	"github.com/copolio/golith/pkg/web"
 	"gorm.io/gorm"
 )
 
-var _ data.FpCrudRepository[any, any] = &GormRepository[any, any]{}
-var _ data.CrudRepository[any, any] = &GormRepository[any, any]{}
+var _ data.FpCrudRepository[any, any] = &Repository[any, any]{}
+var _ data.CrudRepository[any, any] = &Repository[any, any]{}
 
-type GormRepository[T any, K any] struct {
+type Repository[T any, K any] struct {
+	db *gorm.DB
 }
 
-func (g GormRepository[T, K]) FpSave(entity T) func(arg any) (T, error) {
+func (g Repository[T, K]) FpSave(entity T) func(arg any) (T, error) {
 	return func(arg any) (T, error) {
 		tx := arg.(*gorm.DB)
 		result := tx.Save(&entity)
@@ -20,7 +20,7 @@ func (g GormRepository[T, K]) FpSave(entity T) func(arg any) (T, error) {
 	}
 }
 
-func (g GormRepository[T, K]) FpFindById(id K) func(arg any) (T, error) {
+func (g Repository[T, K]) FpFindById(id K) func(arg any) (T, error) {
 	return func(arg any) (T, error) {
 		tx := arg.(*gorm.DB)
 		var entity T
@@ -29,7 +29,7 @@ func (g GormRepository[T, K]) FpFindById(id K) func(arg any) (T, error) {
 	}
 }
 
-func (g GormRepository[T, K]) FpDelete(entity T) func(arg any) error {
+func (g Repository[T, K]) FpDelete(entity T) func(arg any) error {
 	return func(arg any) error {
 		tx := arg.(*gorm.DB)
 		result := tx.Delete(&entity)
@@ -37,22 +37,22 @@ func (g GormRepository[T, K]) FpDelete(entity T) func(arg any) error {
 	}
 }
 
-func (g GormRepository[T, K]) WithTransaction(transaction any) {
-	web.GetApplication().GormDB = transaction.(*gorm.DB)
+func (g Repository[T, K]) WithTransaction(transaction any) {
+	g.db = transaction.(*gorm.DB)
 }
 
-func (g GormRepository[T, K]) Save(entity T) (*T, error) {
-	result := web.GetApplication().GormDB.Save(&entity)
+func (g Repository[T, K]) Save(entity T) (*T, error) {
+	result := g.db.Save(&entity)
 	return &entity, result.Error
 }
 
-func (g GormRepository[T, K]) FindById(id K) (*T, error) {
+func (g Repository[T, K]) FindById(id K) (*T, error) {
 	var entity T
-	result := web.GetApplication().GormDB.First(&entity, id)
+	result := g.db.First(&entity, id)
 	return &entity, result.Error
 }
 
-func (g GormRepository[T, K]) Delete(entity T) (err error) {
-	result := web.GetApplication().GormDB.Delete(&entity)
+func (g Repository[T, K]) Delete(entity T) (err error) {
+	result := g.db.Delete(&entity)
 	return result.Error
 }
