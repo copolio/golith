@@ -1,7 +1,7 @@
 package golithgorm
 
 import (
-	"github.com/copolio/golith/pkg/golithdata"
+	"github.com/copolio/golith/golithdata"
 	"gorm.io/gorm"
 )
 

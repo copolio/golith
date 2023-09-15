@@ -1,9 +1,9 @@
 package golith
 
 import (
-	"github.com/copolio/golith/pkg/golithgin"
-	"github.com/copolio/golith/pkg/golithgorm"
-	"github.com/copolio/golith/pkg/golithswag"
+	"github.com/copolio/golith/golithgin"
+	"github.com/copolio/golith/golithgorm"
+	"github.com/copolio/golith/golithswag"
 )
 
 type Configuration struct {

@@ -2,27 +2,27 @@ package golith
 
 import (
 	"fmt"
-	"github.com/copolio/golith/pkg/golithgin"
-	"github.com/copolio/golith/pkg/golithgorm"
+	"github.com/copolio/golith/golithgin"
+	"github.com/copolio/golith/golithgorm"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"log"
 )
 
-var instance *WebApplication
+var instance *Application
 
-type WebApplication struct {
+type Application struct {
 	Configuration Configuration
 	GormDB        *gorm.DB
 	GinEngine     *gin.Engine
 }
 
-func GetWebApplication() (webApplication *WebApplication) {
+func GetWebApplication() (webApplication *Application) {
 	if instance != nil {
 		return instance
 	}
-	instance = &WebApplication{
+	instance = &Application{
 		Configuration: DefaultConfiguration(),
 		GormDB:        nil,
 		GinEngine:     nil,
@@ -30,12 +30,12 @@ func GetWebApplication() (webApplication *WebApplication) {
 	return instance
 }
 
-func (application WebApplication) Start() {
+func (application Application) Start() {
 	application.initGorm()
 	application.initGin()
 }
 
-func (application WebApplication) initGin() {
+func (application Application) initGin() {
 	gin.SetMode(string(application.Configuration.Gin.Mode))
 	r := gin.Default()
 	r.Use(golithgin.HttpErrorHandler())
@@ -46,7 +46,7 @@ func (application WebApplication) initGin() {
 	}
 }
 
-func (application WebApplication) initGorm() {
+func (application Application) initGorm() {
 	var err error
 	application.GormDB, err = gorm.Open(
 		mysql.Open(golithgorm.GetMysqlDSN(application.Configuration.Gorm.Datasource)),

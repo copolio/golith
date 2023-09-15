@@ -1,7 +1,7 @@
 package golithgorm
 
 import (
-	"github.com/copolio/golith/pkg/golithdata/ddl"
+	"github.com/copolio/golith/golithdata/ddl"
 )
 
 type Datasource struct {
@@ -24,7 +24,7 @@ func DefaultDatasource() Datasource {
 		Ddl:         ddl.NONE,
 		Host:        "localhost:3306",
 		Protocol:    "tcp",
-		Schema:      "demo",
+		Schema:      "petstore",
 		User:        "root",
 		Password:    "test",
 		MaxIdleConn: 10,
