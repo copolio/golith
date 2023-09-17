@@ -18,7 +18,7 @@ type Application struct {
 	GinEngine     *gin.Engine
 }
 
-func GetWebApplication() (webApplication *Application) {
+func GetApplication() (webApplication *Application) {
 	if instance != nil {
 		return instance
 	}
@@ -30,7 +30,7 @@ func GetWebApplication() (webApplication *Application) {
 	return instance
 }
 
-func (application Application) Start() {
+func (application Application) Run() {
 	application.initGorm()
 	application.initGin()
 }
