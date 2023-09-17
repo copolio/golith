@@ -26,7 +26,7 @@ func NewPetService(petRepository *repository.PetRepository) *PetService {
 }
 
 func (p PetService) AddPet(pet entity.Pet) (entity.Pet, error) {
-	err := golith.GetApplication().GormDB.Transaction(func(tx *gorm.DB) error {
+	err := golith.NewApplication().GormDB.Transaction(func(tx *gorm.DB) error {
 		_, err := p.petRepository.Save(tx, pet)
 		return err
 	})
@@ -34,24 +34,24 @@ func (p PetService) AddPet(pet entity.Pet) (entity.Pet, error) {
 }
 
 func (p PetService) UpdatePet(pet entity.Pet) (entity.Pet, error) {
-	return p.petRepository.Save(golith.GetApplication().GormDB, pet)
+	return p.petRepository.Save(golith.NewApplication().GormDB, pet)
 }
 
 func (p PetService) FindAllByStatus(status entity.PetStatus) ([]entity.Pet, error) {
-	return p.petRepository.FindAll(golith.GetApplication().GormDB, entity.Pet{Status: status})
+	return p.petRepository.FindAll(golith.NewApplication().GormDB, entity.Pet{Status: status})
 }
 
 func (p PetService) FindById(petId uint64) (entity.Pet, error) {
-	return p.petRepository.FindById(golith.GetApplication().GormDB, petId)
+	return p.petRepository.FindById(golith.NewApplication().GormDB, petId)
 }
 
 func (p PetService) Delete(petId uint64) error {
-	return golith.GetApplication().GormDB.Transaction(func(tx *gorm.DB) error {
-		pet, err := p.petRepository.FindById(golith.GetApplication().GormDB, petId)
+	return golith.NewApplication().GormDB.Transaction(func(tx *gorm.DB) error {
+		pet, err := p.petRepository.FindById(golith.NewApplication().GormDB, petId)
 		if err != nil {
 			return err
 		}
-		dbErr := p.petRepository.Delete(golith.GetApplication().GormDB, pet)
+		dbErr := p.petRepository.Delete(golith.NewApplication().GormDB, pet)
 		if dbErr != nil {
 			return err
 		}

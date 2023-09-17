@@ -10,7 +10,7 @@ import (
 	"log"
 )
 
-var instance *Application
+var instance *Application = nil
 
 type Application struct {
 	Configuration Configuration
@@ -18,7 +18,7 @@ type Application struct {
 	GinEngine     *gin.Engine
 }
 
-func GetApplication() (webApplication *Application) {
+func NewApplication() (webApplication *Application) {
 	if instance != nil {
 		return instance
 	}
@@ -27,38 +27,37 @@ func GetApplication() (webApplication *Application) {
 		GormDB:        nil,
 		GinEngine:     nil,
 	}
+	initGin()
+	initGorm()
 	return instance
 }
 
 func (application Application) Run() {
-	application.initGorm()
-	application.initGin()
-}
-
-func (application Application) initGin() {
-	gin.SetMode(string(application.Configuration.Gin.Mode))
-	r := gin.Default()
-	r.Use(golithgin.HttpErrorHandler())
-
-	err := r.Run(fmt.Sprintf(":%d", application.Configuration.Gin.Server.Port))
+	err := application.GinEngine.Run(fmt.Sprintf(":%d", application.Configuration.Gin.Server.Port))
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
-func (application Application) initGorm() {
+func initGin() {
+	gin.SetMode(string(instance.Configuration.Gin.Mode))
+	instance.GinEngine = gin.Default()
+	instance.GinEngine.Use(golithgin.HttpErrorHandler())
+}
+
+func initGorm() {
 	var err error
-	application.GormDB, err = gorm.Open(
-		mysql.Open(golithgorm.GetMysqlDSN(application.Configuration.Gorm.Datasource)),
-		&application.Configuration.Gorm.Configuration)
+	instance.GormDB, err = gorm.Open(
+		mysql.Open(golithgorm.GetMysqlDSN(instance.Configuration.Gorm.Datasource)),
+		&instance.Configuration.Gorm.Configuration)
 
 	if err != nil {
 		log.Fatalf("Error connecting MySQL: %v\n", err)
 	}
-	sqlDB, err := application.GormDB.DB()
+	sqlDB, err := instance.GormDB.DB()
 	if err != nil {
 		log.Fatalf("Error retrieving MySQL sql connection: %v\n", err)
 	}
-	sqlDB.SetMaxIdleConns(application.Configuration.Gorm.Datasource.MaxIdleConn)
-	sqlDB.SetMaxOpenConns(application.Configuration.Gorm.Datasource.MaxOpenConn)
+	sqlDB.SetMaxIdleConns(instance.Configuration.Gorm.Datasource.MaxIdleConn)
+	sqlDB.SetMaxOpenConns(instance.Configuration.Gorm.Datasource.MaxOpenConn)
 }

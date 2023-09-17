@@ -4,8 +4,8 @@ type PetStatus string
 
 const (
 	AVAILABLE PetStatus = "available"
-	PENDING             = "pending"
-	SOLD                = "sold"
+	PENDING   PetStatus = "pending"
+	SOLD      PetStatus = "sold"
 )
 
 type Pet struct {

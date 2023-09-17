@@ -22,7 +22,6 @@ func (router V2Router) SetV2Routes(r *gin.Engine) {
 			pet.PUT("", router.petController.Update())
 			pet.GET("/findByStatus", router.petController.FindByStatus())
 			pet.GET("/:petId", router.petController.FindById())
-			pet.POST("/:petId", router.petController.UpdateByForm())
 			pet.DELETE("/:petId", router.petController.Delete())
 		}
 	}
