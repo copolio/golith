@@ -7,14 +7,14 @@ import (
 )
 
 type Configuration struct {
-	Gin     golithgin.Configuration  `yaml:"golithgin"`
-	Swagger golithswag.Configuration `yaml:"golithswag"`
-	Gorm    golithgorm.Configuration `yaml:"golithgorm"`
+	Gin     *golithgin.Configuration  `yaml:"golithgin"`
+	Swagger *golithswag.Configuration `yaml:"golithswag"`
+	Gorm    *golithgorm.Configuration `yaml:"golithgorm"`
 }
 
 func DefaultConfiguration() Configuration {
 	return Configuration{
-		Gin:     golithgin.DefaultGinConfig(),
+		Gin:     golithgin.DefaultConfiguration(),
 		Swagger: golithswag.DefaultConfiguration(),
 		Gorm:    golithgorm.DefaultConfiguration(),
 	}
