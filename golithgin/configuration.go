@@ -5,8 +5,8 @@ import (
 )
 
 type Configuration struct {
-	Mode   Mode
-	Server ServerConfiguration
+	Mode Mode
+	Port uint `yaml:"port"`
 }
 
 type Mode string
@@ -17,17 +17,9 @@ const (
 	TestMode    Mode = gin.TestMode
 )
 
-func DefaultGinConfig() Configuration {
-	return Configuration{
-		Mode:   DebugMode,
-		Server: DefaultServerConfig(),
+func DefaultConfiguration() *Configuration {
+	return &Configuration{
+		Mode: DebugMode,
+		Port: 8080,
 	}
-}
-
-type ServerConfiguration struct {
-	Port uint `yaml:"port"`
-}
-
-func DefaultServerConfig() ServerConfiguration {
-	return ServerConfiguration{Port: 8080}
 }

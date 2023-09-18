@@ -8,8 +8,8 @@ type Configuration struct {
 	Version     string
 }
 
-func DefaultConfiguration() Configuration {
-	return Configuration{
+func DefaultConfiguration() *Configuration {
+	return &Configuration{
 		Use:         false,
 		Path:        "",
 		Title:       "",

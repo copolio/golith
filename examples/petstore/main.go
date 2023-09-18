@@ -1,9 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"github.com/copolio/golith"
 	"github.com/copolio/golith/examples/petstore/doc/swagger"
 	"github.com/copolio/golith/internal/petstore/controller"
+	"github.com/copolio/golith/internal/petstore/entity"
 	"github.com/copolio/golith/internal/petstore/repository"
 	"github.com/copolio/golith/internal/petstore/router"
 	"github.com/copolio/golith/internal/petstore/service"
@@ -17,7 +19,11 @@ func main() {
 	swagger.SwaggerInfo.Version = "0.0.1"
 
 	application := golith.NewApplication()
-	application.GinEngine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+	err := application.GormDB.AutoMigrate(&entity.Pet{})
+	if err != nil {
+		fmt.Println(err)
+	}
+	application.GinEngine.GET("/docs/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	v2Router := router.NewV2Router(controller.NewPetController(service.NewPetService(&repository.PetRepository{})))
 	v2Router.SetV2Routes(application.GinEngine)
 	application.Run()

@@ -33,7 +33,7 @@ func NewApplication() (webApplication *Application) {
 }
 
 func (application Application) Run() {
-	err := application.GinEngine.Run(fmt.Sprintf(":%d", application.Configuration.Gin.Server.Port))
+	err := application.GinEngine.Run(fmt.Sprintf(":%d", application.Configuration.Gin.Port))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -49,7 +49,7 @@ func initGorm() {
 	var err error
 	instance.GormDB, err = gorm.Open(
 		mysql.Open(golithgorm.GetMysqlDSN(instance.Configuration.Gorm.Datasource)),
-		&instance.Configuration.Gorm.Configuration)
+		&instance.Configuration.Gorm.GormConfig)
 
 	if err != nil {
 		log.Fatalf("Error connecting MySQL: %v\n", err)
