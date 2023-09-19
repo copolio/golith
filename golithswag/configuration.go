@@ -2,7 +2,9 @@ package golithswag
 
 type Configuration struct {
 	Use         bool
-	Path        string
+	RouterPath  string
+	SourcePath  string
+	OutputPath  string
 	Title       string
 	Description string
 	Version     string
@@ -11,7 +13,7 @@ type Configuration struct {
 func DefaultConfiguration() *Configuration {
 	return &Configuration{
 		Use:         false,
-		Path:        "",
+		RouterPath:  "",
 		Title:       "",
 		Description: "",
 		Version:     "",
