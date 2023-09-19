@@ -1,4 +1,4 @@
-# Golith
+# Golith [WIP]
 
 Golith is a template project that aims to ease the configuration and building of a Go server-side application based on
 Gin and other
