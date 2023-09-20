@@ -16,7 +16,7 @@ func NewV2Router(petController *controller.PetController) *V2Router {
 func (router V2Router) SetV2Routes(r *gin.Engine) {
 	v2 := r.Group("/v2")
 	{
-		pet := v2.Group("/pet")
+		pet := v2.Group("/pets")
 		{
 			pet.POST("", router.petController.Create())
 			pet.PUT("", router.petController.Update())

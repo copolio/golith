@@ -8,3 +8,7 @@ import (
 type PetRepository struct {
 	golithgorm.Repository[entity.Pet, uint64]
 }
+
+func NewPetRepository() *PetRepository {
+	return &PetRepository{}
+}
