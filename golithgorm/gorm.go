@@ -1,23 +1,19 @@
 package golithgorm
 
 import (
+	"go.uber.org/fx"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
-func NewGorm(conf *Configuration) error {
+func NewGorm(conf *Configuration) (*gorm.DB, error) {
 	gormDB, err := gorm.Open(
 		mysql.Open(GetMysqlDSN(conf.Datasource)),
 		&conf.GormConfig)
-
-	if err != nil {
-		return err
-	}
 	sqlDB, err := gormDB.DB()
-	if err != nil {
-		return err
-	}
 	sqlDB.SetMaxIdleConns(conf.Datasource.MaxIdleConn)
 	sqlDB.SetMaxOpenConns(conf.Datasource.MaxOpenConn)
-	return nil
+	return gormDB, err
 }
+
+func Use() fx.Option { return fx.Provide(NewGorm) }
