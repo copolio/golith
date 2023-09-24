@@ -30,3 +30,9 @@ func newGin(lc fx.Lifecycle, conf *Configuration) *gin.Engine {
 func Use() fx.Option {
 	return fx.Provide(newGin)
 }
+
+func Run() fx.Option {
+	return fx.Invoke(func(r *gin.Engine) {
+		r.Run()
+	})
+}

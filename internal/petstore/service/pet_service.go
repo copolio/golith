@@ -4,8 +4,13 @@ import (
 	"github.com/copolio/golith"
 	"github.com/copolio/golith/internal/petstore/entity"
 	"github.com/copolio/golith/internal/petstore/repository"
+	"go.uber.org/fx"
 	"gorm.io/gorm"
 )
+
+func init() {
+	golith.Register(fx.Provide(NewPetUseCase))
+}
 
 type PetUseCase interface {
 	AddPet(pet entity.Pet) (entity.Pet, error)
@@ -15,18 +20,20 @@ type PetUseCase interface {
 	Delete(petId uint64) error
 }
 
-var _ PetUseCase = PetService{}
-
 type PetService struct {
-	petRepository *repository.PetRepository
+	db            *gorm.DB
+	petRepository repository.PetRepository
 }
 
-func NewPetService(petRepository *repository.PetRepository) *PetService {
-	return &PetService{petRepository: petRepository}
+func NewPetUseCase(db *gorm.DB, petRepository repository.PetRepository) PetUseCase {
+	return &PetService{
+		db:            db,
+		petRepository: petRepository,
+	}
 }
 
 func (p PetService) AddPet(pet entity.Pet) (entity.Pet, error) {
-	err := golith.NewApplication().GormDB.Transaction(func(tx *gorm.DB) error {
+	err := p.db.Transaction(func(tx *gorm.DB) error {
 		_, err := p.petRepository.Save(tx, pet)
 		return err
 	})
@@ -34,24 +41,24 @@ func (p PetService) AddPet(pet entity.Pet) (entity.Pet, error) {
 }
 
 func (p PetService) UpdatePet(pet entity.Pet) (entity.Pet, error) {
-	return p.petRepository.Save(golith.NewApplication().GormDB, pet)
+	return p.petRepository.Save(p.db, pet)
 }
 
 func (p PetService) FindAllByStatus(status entity.PetStatus) ([]entity.Pet, error) {
-	return p.petRepository.FindAll(golith.NewApplication().GormDB, entity.Pet{Status: status})
+	return p.petRepository.FindAll(p.db, entity.Pet{Status: status})
 }
 
 func (p PetService) FindById(petId uint64) (entity.Pet, error) {
-	return p.petRepository.FindById(golith.NewApplication().GormDB, petId)
+	return p.petRepository.FindById(p.db, petId)
 }
 
 func (p PetService) Delete(petId uint64) error {
-	return golith.NewApplication().GormDB.Transaction(func(tx *gorm.DB) error {
-		pet, err := p.petRepository.FindById(golith.NewApplication().GormDB, petId)
+	return p.db.Transaction(func(tx *gorm.DB) error {
+		pet, err := p.petRepository.FindById(p.db, petId)
 		if err != nil {
 			return err
 		}
-		dbErr := p.petRepository.Delete(golith.NewApplication().GormDB, pet)
+		dbErr := p.petRepository.Delete(p.db, pet)
 		if dbErr != nil {
 			return err
 		}

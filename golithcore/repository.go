@@ -1,4 +1,4 @@
-package golithdata
+package golithcore
 
 type CrudRepository[T any, K any] interface {
 	Save(db any, entity T) (T, error)

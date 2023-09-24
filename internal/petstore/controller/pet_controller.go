@@ -2,21 +2,27 @@ package controller
 
 import (
 	"errors"
+	"github.com/copolio/golith"
 	"github.com/copolio/golith/golithgin"
 	"github.com/copolio/golith/internal/petstore/entity"
 	"github.com/copolio/golith/internal/petstore/service"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
+	"go.uber.org/fx"
 	"net/http"
 	"strconv"
 	"time"
 )
 
-type PetController struct {
-	petService *service.PetService
+func init() {
+	golith.Register(fx.Provide(NewPetController))
 }
 
-func NewPetController(petService *service.PetService) *PetController {
+type PetController struct {
+	petService service.PetUseCase
+}
+
+func NewPetController(petService service.PetUseCase) *PetController {
 	return &PetController{petService: petService}
 }
 

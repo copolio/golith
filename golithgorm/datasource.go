@@ -1,7 +1,7 @@
 package golithgorm
 
 import (
-	"github.com/copolio/golith/golithdata/ddl"
+	"github.com/copolio/golith/golithcore/ddl"
 )
 
 type Datasource struct {

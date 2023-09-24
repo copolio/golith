@@ -3,22 +3,22 @@ package golith
 import (
 	"github.com/copolio/golith/golithgin"
 	"github.com/copolio/golith/golithswag"
-	"github.com/gin-gonic/gin"
 	"go.uber.org/fx"
 )
 
+var dependencies = []fx.Option{
+	golithgin.Use(),
+	golithswag.Use(),
+	golithgin.Run(),
+}
+
 func App(additionalOptions ...fx.Option) (app *fx.App) {
-	defaultOptions := []fx.Option{
-		golithgin.Use(),
-		golithswag.Use(),
-		fx.Provide(golithgin.DefaultConfiguration),
-		fx.Provide(golithswag.DefaultConfiguration),
-		fx.Invoke(func(r *gin.Engine) {
-			r.Run()
-		}),
-	}
-	options := append(additionalOptions, defaultOptions...)
+	options := append(additionalOptions, dependencies...)
 	return fx.New(
 		options...,
 	)
+}
+
+func Register(options ...fx.Option) {
+	dependencies = append(options, dependencies...)
 }
