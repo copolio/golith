@@ -1,11 +1,11 @@
 package golithgorm
 
 import (
-	"github.com/copolio/golith/golithcore"
+	"github.com/copolio/golith/golithdata"
 	"gorm.io/gorm"
 )
 
-var _ golithcore.CrudRepository[any, any] = &Repository[any, any]{}
+var _ golithdata.CrudRepository[any, any] = &Repository[any, any]{}
 
 type Repository[T any, K any] struct {
 }

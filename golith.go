@@ -18,7 +18,3 @@ func App(additionalOptions ...fx.Option) (app *fx.App) {
 		options...,
 	)
 }
-
-func Register(options ...fx.Option) {
-	dependencies = append(options, dependencies...)
-}

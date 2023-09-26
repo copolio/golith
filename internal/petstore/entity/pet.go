@@ -1,5 +1,7 @@
 package entity
 
+import "gorm.io/gorm"
+
 type PetStatus string
 
 const (
@@ -9,7 +11,7 @@ const (
 )
 
 type Pet struct {
-	Id        uint64
+	gorm.Model
 	Category  Category
 	Name      string
 	PhotoUrls []string

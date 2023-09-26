@@ -1,18 +1,9 @@
 package router
 
 import (
-	"github.com/copolio/golith"
 	"github.com/copolio/golith/internal/petstore/controller"
 	"github.com/gin-gonic/gin"
-	"go.uber.org/fx"
 )
-
-func init() {
-	golith.Register(fx.Provide(NewV2Router))
-	golith.Register(fx.Invoke(func(engine *gin.Engine, router *V2Router) {
-		router.SetV2Routes(engine)
-	}))
-}
 
 type V2Router struct {
 	petController *controller.PetController

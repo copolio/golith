@@ -1,16 +1,10 @@
 package service
 
 import (
-	"github.com/copolio/golith"
 	"github.com/copolio/golith/internal/petstore/entity"
 	"github.com/copolio/golith/internal/petstore/repository"
-	"go.uber.org/fx"
 	"gorm.io/gorm"
 )
-
-func init() {
-	golith.Register(fx.Provide(NewPetUseCase))
-}
 
 type PetUseCase interface {
 	AddPet(pet entity.Pet) (entity.Pet, error)
@@ -25,7 +19,7 @@ type PetService struct {
 	petRepository repository.PetRepository
 }
 
-func NewPetUseCase(db *gorm.DB, petRepository repository.PetRepository) PetUseCase {
+func NewPetService(db *gorm.DB, petRepository repository.PetRepository) PetUseCase {
 	return &PetService{
 		db:            db,
 		petRepository: petRepository,
