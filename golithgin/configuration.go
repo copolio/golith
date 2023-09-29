@@ -5,7 +5,7 @@ import (
 )
 
 type Configuration struct {
-	Mode Mode
+	Mode Mode `yaml:"mode"`
 	Port uint `yaml:"port"`
 }
 

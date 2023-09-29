@@ -6,6 +6,7 @@ import (
 	"github.com/copolio/golith/golithgin"
 	"github.com/copolio/golith/golithgorm"
 	"github.com/copolio/golith/golithswag"
+	"github.com/copolio/golith/golithviper"
 	"github.com/copolio/golith/internal/petstore/controller"
 	"github.com/copolio/golith/internal/petstore/repository"
 	"github.com/copolio/golith/internal/petstore/router"
@@ -19,12 +20,13 @@ import (
 // @description     This is a sample server.
 func main() {
 	golith.App(
+		fx.Provide(golithviper.LoadConfiguration),
 		golithgin.Use(),
 		golithswag.Use(),
 		golithgorm.Use(),
-		fx.Provide(golithgin.DefaultConfiguration),
-		fx.Provide(golithswag.DefaultConfiguration),
-		fx.Provide(golithgorm.DefaultConfiguration),
+		//fx.Provide(golithgin.DefaultConfiguration),
+		//fx.Provide(golithswag.DefaultConfiguration),
+		//fx.Provide(golithgorm.DefaultConfiguration),
 		fx.Provide(router.NewV2Router),
 		fx.Provide(controller.NewPetController),
 		fx.Provide(service.NewPetService),

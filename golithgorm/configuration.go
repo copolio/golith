@@ -6,8 +6,8 @@ import (
 )
 
 type Configuration struct {
-	Datasource Datasource
-	GormConfig gorm.Config
+	Datasource Datasource  `yaml:"datasource"`
+	GormConfig gorm.Config `yaml:"gormConfig"`
 }
 
 func DefaultConfiguration() *Configuration {

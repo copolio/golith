@@ -32,7 +32,7 @@ func Use() fx.Option {
 }
 
 func Run() fx.Option {
-	return fx.Invoke(func(r *gin.Engine) {
-		r.Run()
+	return fx.Invoke(func(r *gin.Engine, conf *Configuration) {
+		r.Run(fmt.Sprintf(":%d", conf.Port))
 	})
 }
