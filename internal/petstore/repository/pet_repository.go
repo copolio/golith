@@ -14,6 +14,6 @@ type PetGormRepository struct {
 	golithgorm.Repository[entity.Pet, uint64]
 }
 
-func NewPetGormRepository() PetRepository {
+func NewPetGormRepository() *PetGormRepository {
 	return &PetGormRepository{}
 }

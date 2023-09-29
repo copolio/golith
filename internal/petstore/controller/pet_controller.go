@@ -13,11 +13,11 @@ import (
 )
 
 type PetController struct {
-	petService service.PetUseCase
+	petUseCase service.PetUseCase
 }
 
-func NewPetController(petService service.PetUseCase) *PetController {
-	return &PetController{petService: petService}
+func NewPetController(petService *service.PetService) *PetController {
+	return &PetController{petUseCase: petService}
 }
 
 // Create godoc
@@ -36,7 +36,7 @@ func (p PetController) Create() func(ctx *gin.Context) {
 			ctx.Error(err)
 			return
 		}
-		response, err := p.petService.AddPet(request)
+		response, err := p.petUseCase.AddPet(request)
 		if err != nil {
 			ctx.Error(golithgin.HttpError{
 				Timestamp: time.Now(),
@@ -93,7 +93,7 @@ func (p PetController) Delete() func(ctx *gin.Context) {
 			ctx.AbortWithError(http.StatusBadRequest, errors.New("Invalid Key supplied"))
 			return
 		}
-		err = p.petService.Delete(petId)
+		err = p.petUseCase.Delete(petId)
 		if err != nil {
 			ctx.Error(err)
 			return
@@ -118,7 +118,7 @@ func (p PetController) FindById() func(ctx *gin.Context) {
 			ctx.AbortWithError(http.StatusBadRequest, errors.New("Invalid ID supplied"))
 			return
 		}
-		pet, err := p.petService.FindById(petId)
+		pet, err := p.petUseCase.FindById(petId)
 		if err != nil {
 			ctx.AbortWithError(http.StatusBadRequest, errors.New("Pet not found"))
 			return
@@ -140,7 +140,7 @@ func (p PetController) FindById() func(ctx *gin.Context) {
 func (p PetController) FindByStatus() func(ctx *gin.Context) {
 	return func(ctx *gin.Context) {
 		status := entity.PetStatus(ctx.Query("status"))
-		results, err := p.petService.FindAllByStatus(status)
+		results, err := p.petUseCase.FindAllByStatus(status)
 		if err != nil {
 			ctx.AbortWithError(http.StatusBadRequest, errors.New("Invalid status value"))
 			return

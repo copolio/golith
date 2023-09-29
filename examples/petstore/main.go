@@ -19,6 +19,8 @@ import (
 // @description     This is a sample server.
 func main() {
 	golith.App(
+		golithgin.Use(),
+		golithswag.Use(),
 		golithgorm.Use(),
 		fx.Provide(golithgin.DefaultConfiguration),
 		fx.Provide(golithswag.DefaultConfiguration),
@@ -30,5 +32,6 @@ func main() {
 		fx.Invoke(func(engine *gin.Engine, router *router.V2Router) {
 			router.SetV2Routes(engine)
 		}),
+		golithgin.Run(),
 	).Run()
 }

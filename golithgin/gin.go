@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func newGin(lc fx.Lifecycle, conf *Configuration) *gin.Engine {
+func NewGin(lc fx.Lifecycle, conf *Configuration) *gin.Engine {
 	gin.SetMode(string(conf.Mode))
 	router := gin.Default()
 	router.Use(HttpErrorHandler())
@@ -28,7 +28,7 @@ func newGin(lc fx.Lifecycle, conf *Configuration) *gin.Engine {
 }
 
 func Use() fx.Option {
-	return fx.Provide(newGin)
+	return fx.Provide(NewGin)
 }
 
 func Run() fx.Option {
