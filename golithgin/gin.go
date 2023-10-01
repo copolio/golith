@@ -3,17 +3,23 @@ package golithgin
 import (
 	"context"
 	"fmt"
+	ginzap "github.com/gin-contrib/zap"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/fx"
+	"go.uber.org/zap"
 	"net/http"
+	"time"
 )
 
 func NewGin(lc fx.Lifecycle, conf *Configuration) *gin.Engine {
+	logger, _ := zap.NewProduction()
 	gin.SetMode(string(conf.Mode))
-	router := gin.Default()
-	router.Use(HttpErrorHandler())
+	r := gin.Default()
+	r.Use(HttpErrorHandler())
+	r.Use(ginzap.Ginzap(logger, time.RFC3339, true))
+	r.Use(ginzap.RecoveryWithZap(logger, true))
 
-	server := &http.Server{Addr: fmt.Sprintf(":%d", conf.Port), Handler: router}
+	server := &http.Server{Addr: fmt.Sprintf(":%d", conf.Port), Handler: r}
 	lc.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
 			fmt.Println("[golith] Starting Gin HTTP Server at", server.Addr)
@@ -26,7 +32,7 @@ func NewGin(lc fx.Lifecycle, conf *Configuration) *gin.Engine {
 			return nil
 		},
 	})
-	return router
+	return r
 }
 
 func Use() fx.Option {
