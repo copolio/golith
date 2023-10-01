@@ -19,7 +19,7 @@ type PetService struct {
 	petRepository repository.PetRepository
 }
 
-func NewPetService(db *gorm.DB, petRepository *repository.PetGormRepository) *PetService {
+func NewPetService(db *gorm.DB, petRepository repository.PetRepository) *PetService {
 	return &PetService{
 		db:            db,
 		petRepository: petRepository,

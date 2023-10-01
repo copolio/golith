@@ -6,7 +6,7 @@ gorm:
     ddl: NONE
     host: "localhost:3306"
     protocol: "tcp"
-    schema: "petstore"
+    schema: "restapi"
     user: "root"
     password: "test"
     maxIdleConn: 10
@@ -19,4 +19,4 @@ gorm:
     SkipDefaultTransaction: true
 swagger:
   use: true
-  routerPath: "/docs/swagger/*any"
+  routerPath: "/docs/*any"

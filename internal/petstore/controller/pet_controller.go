@@ -16,8 +16,8 @@ type PetController struct {
 	petUseCase service.PetUseCase
 }
 
-func NewPetController(petService *service.PetService) *PetController {
-	return &PetController{petUseCase: petService}
+func NewPetController(petUseCase service.PetUseCase) *PetController {
+	return &PetController{petUseCase: petUseCase}
 }
 
 // Create godoc
