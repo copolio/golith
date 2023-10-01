@@ -1,11 +1,17 @@
 package golithgorm
 
 import (
-	"github.com/copolio/golith/golithdata"
 	"gorm.io/gorm"
 )
 
-var _ golithdata.CrudRepository[any, any] = &Repository[any, any]{}
+var _ CrudRepository[any, any] = &Repository[any, any]{}
+
+type CrudRepository[T any, K any] interface {
+	Save(db any, entity T) (T, error)
+	FindAll(db any, where T) ([]T, error)
+	FindById(db any, id K) (T, error)
+	Delete(db any, entity T) error
+}
 
 type Repository[T any, K any] struct {
 }

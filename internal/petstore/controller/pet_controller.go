@@ -2,6 +2,7 @@ package controller
 
 import (
 	"errors"
+	"fmt"
 	"github.com/copolio/golith/golithgin"
 	"github.com/copolio/golith/internal/petstore/entity"
 	"github.com/copolio/golith/internal/petstore/service"
@@ -80,12 +81,12 @@ func (p PetController) Update(ctx *gin.Context) {
 func (p PetController) Delete(ctx *gin.Context) {
 	petId, err := strconv.ParseUint(ctx.Param("petId"), 10, 64)
 	if err != nil {
-		ctx.AbortWithError(http.StatusBadRequest, errors.New("Invalid ID supplied"))
+		ctx.AbortWithError(http.StatusBadRequest, fmt.Errorf("invalid ID supplied: %w", err))
 		return
 	}
 	apiKey := ctx.GetHeader("api_key")
 	if apiKey == "" {
-		ctx.AbortWithError(http.StatusBadRequest, errors.New("Invalid Key supplied"))
+		ctx.AbortWithError(http.StatusBadRequest, errors.New("invalid Key supplied"))
 		return
 	}
 	err = p.petUseCase.Delete(petId)
@@ -108,12 +109,12 @@ func (p PetController) Delete(ctx *gin.Context) {
 func (p PetController) FindById(ctx *gin.Context) {
 	petId, err := strconv.ParseUint(ctx.Param("petId"), 10, 64)
 	if err != nil {
-		ctx.AbortWithError(http.StatusBadRequest, errors.New("Invalid ID supplied"))
+		ctx.AbortWithError(http.StatusBadRequest, fmt.Errorf("invalid ID supplied: %w", err))
 		return
 	}
 	pet, err := p.petUseCase.FindById(petId)
 	if err != nil {
-		ctx.AbortWithError(http.StatusBadRequest, errors.New("Pet not found"))
+		ctx.AbortWithError(http.StatusBadRequest, fmt.Errorf("pet not found: %w", err))
 		return
 	}
 	ctx.JSON(http.StatusOK, pet)
@@ -133,7 +134,7 @@ func (p PetController) FindByStatus(ctx *gin.Context) {
 	status := entity.PetStatus(ctx.Query("status"))
 	results, err := p.petUseCase.FindAllByStatus(status)
 	if err != nil {
-		ctx.AbortWithError(http.StatusBadRequest, err)
+		ctx.AbortWithError(http.StatusBadRequest, fmt.Errorf("invalid status value: %w", err))
 		return
 	}
 	ctx.JSON(http.StatusOK, results)

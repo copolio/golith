@@ -3,10 +3,10 @@ gin:
   port: 8080
 gorm:
   datasource:
-    ddl: NONE
+    ddl: CREATE
     host: "localhost:3306"
     protocol: "tcp"
-    schema: "restapi"
+    schema: "petstore"
     user: "root"
     password: "test"
     maxIdleConn: 10

@@ -4,6 +4,10 @@ import "gorm.io/gorm"
 
 type PetStatus string
 
+func (p PetStatus) GormDataType() string {
+	return "text"
+}
+
 const (
 	AVAILABLE PetStatus = "available"
 	PENDING   PetStatus = "pending"
@@ -14,7 +18,7 @@ type Pet struct {
 	gorm.Model
 	Category  Category
 	Name      string
-	PhotoUrls []string
+	PhotoUrls string
 	Tags      []Tag
 	Status    PetStatus
 }

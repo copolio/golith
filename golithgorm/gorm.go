@@ -17,3 +17,13 @@ func NewGorm(conf *Configuration) (*gorm.DB, error) {
 }
 
 func Use() fx.Option { return fx.Provide(NewGorm) }
+
+func Migrate(db *gorm.DB, conf *Configuration, models ...any) {
+	if conf.Datasource.Ddl == MIGRATE {
+		println("Creating tables...")
+		for _, model := range models {
+			db.AutoMigrate(model)
+		}
+		println("Finished creating tables...")
+	}
+}
