@@ -17,11 +17,13 @@ func NewGin(lc fx.Lifecycle, conf *Configuration) *gin.Engine {
 	lc.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
 			fmt.Println("[golith] Starting Gin HTTP Server at", server.Addr)
-			return server.ListenAndServe()
+			go server.ListenAndServe()
+			return nil
 		},
 		OnStop: func(ctx context.Context) error {
 			fmt.Println("[golith] Shutting down Gin server")
-			return server.Shutdown(ctx)
+			server.Shutdown(ctx)
+			return nil
 		},
 	})
 	return router
