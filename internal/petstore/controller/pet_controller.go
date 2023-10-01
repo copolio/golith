@@ -20,7 +20,7 @@ func NewPetController(petUseCase service.PetUseCase) *PetController {
 	return &PetController{petUseCase: petUseCase}
 }
 
-// Create godoc
+// Create
 // @Summary      Adds a new pet to the store
 // @Description  Adds a new pet to the store
 // @Accept       json
@@ -29,28 +29,26 @@ func NewPetController(petUseCase service.PetUseCase) *PetController {
 // @Success      200  {object}  entity.Pet
 // @Failure      405  {object}  golithgin.HttpError "Invalid input"
 // @Router       /v2/pets [post]
-func (p PetController) Create() func(ctx *gin.Context) {
-	return func(ctx *gin.Context) {
-		request := entity.Pet{}
-		if err := ctx.ShouldBindBodyWith(&request, binding.JSON); err != nil {
-			ctx.Error(err)
-			return
-		}
-		response, err := p.petUseCase.AddPet(request)
-		if err != nil {
-			ctx.Error(golithgin.HttpError{
-				Timestamp: time.Now(),
-				Status:    http.StatusMethodNotAllowed,
-				Meta:      err,
-				Message:   "Invalid input",
-			})
-			return
-		}
-		ctx.JSON(http.StatusOK, response)
+func (p PetController) Create(ctx *gin.Context) {
+	request := entity.Pet{}
+	if err := ctx.ShouldBindBodyWith(&request, binding.JSON); err != nil {
+		ctx.Error(err)
+		return
 	}
+	response, err := p.petUseCase.AddPet(request)
+	if err != nil {
+		ctx.Error(golithgin.HttpError{
+			Timestamp: time.Now(),
+			Status:    http.StatusMethodNotAllowed,
+			Meta:      err,
+			Message:   "Invalid input",
+		})
+		return
+	}
+	ctx.JSON(http.StatusOK, response)
 }
 
-// Update godoc
+// Update
 // @Summary      Update an existing pet
 // @Description  Update an existing pet
 // @Accept       json
@@ -61,17 +59,15 @@ func (p PetController) Create() func(ctx *gin.Context) {
 // @Failure      404  {object}  golithgin.HttpError "Pet not found"
 // @Failure      405  {object}  golithgin.HttpError "Validation exception"
 // @Router       /v2/pets [put]
-func (p PetController) Update() func(ctx *gin.Context) {
-	return func(ctx *gin.Context) {
-		request := entity.Pet{}
-		if err := ctx.ShouldBindBodyWith(&request, binding.JSON); err != nil {
-			ctx.Error(err)
-			return
-		}
+func (p PetController) Update(ctx *gin.Context) {
+	request := entity.Pet{}
+	if err := ctx.ShouldBindBodyWith(&request, binding.JSON); err != nil {
+		ctx.Error(err)
+		return
 	}
 }
 
-// Delete godoc
+// Delete
 // @Summary      Deletes a pet
 // @Description  Deletes a pet
 // @Accept       json
@@ -80,28 +76,26 @@ func (p PetController) Update() func(ctx *gin.Context) {
 // @Param        petId path uint64  true  "Pet id to delete"
 // @Failure      400  {object}  golithgin.HttpError "Invalid ID supplied"
 // @Failure      404  {object}  golithgin.HttpError "Pet not found"
-// @Router       /v2/pets/{petId} [delete]
-func (p PetController) Delete() func(ctx *gin.Context) {
-	return func(ctx *gin.Context) {
-		petId, err := strconv.ParseUint(ctx.Param("petId"), 10, 64)
-		if err != nil {
-			ctx.AbortWithError(http.StatusBadRequest, errors.New("Invalid ID supplied"))
-			return
-		}
-		apiKey := ctx.GetHeader("api_key")
-		if apiKey == "" {
-			ctx.AbortWithError(http.StatusBadRequest, errors.New("Invalid Key supplied"))
-			return
-		}
-		err = p.petUseCase.Delete(petId)
-		if err != nil {
-			ctx.Error(err)
-			return
-		}
+// @Router       /v2/pets/{petId} [delete]«
+func (p PetController) Delete(ctx *gin.Context) {
+	petId, err := strconv.ParseUint(ctx.Param("petId"), 10, 64)
+	if err != nil {
+		ctx.AbortWithError(http.StatusBadRequest, errors.New("Invalid ID supplied"))
+		return
+	}
+	apiKey := ctx.GetHeader("api_key")
+	if apiKey == "" {
+		ctx.AbortWithError(http.StatusBadRequest, errors.New("Invalid Key supplied"))
+		return
+	}
+	err = p.petUseCase.Delete(petId)
+	if err != nil {
+		ctx.Error(err)
+		return
 	}
 }
 
-// FindById godoc
+// FindById
 // @Summary      Find pet by ID
 // @Description  Returns a single pet
 // @Accept       json
@@ -111,23 +105,21 @@ func (p PetController) Delete() func(ctx *gin.Context) {
 // @Failure      400  {object}  golithgin.HttpError "Invalid ID supplied"
 // @Failure      404  {object}  golithgin.HttpError "Pet not found"
 // @Router       /v2/pets/{petId} [get]
-func (p PetController) FindById() func(ctx *gin.Context) {
-	return func(ctx *gin.Context) {
-		petId, err := strconv.ParseUint(ctx.Param("petId"), 10, 64)
-		if err != nil {
-			ctx.AbortWithError(http.StatusBadRequest, errors.New("Invalid ID supplied"))
-			return
-		}
-		pet, err := p.petUseCase.FindById(petId)
-		if err != nil {
-			ctx.AbortWithError(http.StatusBadRequest, errors.New("Pet not found"))
-			return
-		}
-		ctx.JSON(http.StatusOK, pet)
+func (p PetController) FindById(ctx *gin.Context) {
+	petId, err := strconv.ParseUint(ctx.Param("petId"), 10, 64)
+	if err != nil {
+		ctx.AbortWithError(http.StatusBadRequest, errors.New("Invalid ID supplied"))
+		return
 	}
+	pet, err := p.petUseCase.FindById(petId)
+	if err != nil {
+		ctx.AbortWithError(http.StatusBadRequest, errors.New("Pet not found"))
+		return
+	}
+	ctx.JSON(http.StatusOK, pet)
 }
 
-// FindByStatus godoc
+// FindByStatus
 // @Summary      Finds Pets by status
 // @Description  Multiple status values can be provided with comma separated strings
 // @Accept       json
@@ -137,14 +129,12 @@ func (p PetController) FindById() func(ctx *gin.Context) {
 // @Failure      400  {object}  golithgin.HttpError "Invalid ID supplied"
 // @Failure      404  {object}  golithgin.HttpError "Pet not found"
 // @Router       /v2/pets/findByStatus [get]
-func (p PetController) FindByStatus() func(ctx *gin.Context) {
-	return func(ctx *gin.Context) {
-		status := entity.PetStatus(ctx.Query("status"))
-		results, err := p.petUseCase.FindAllByStatus(status)
-		if err != nil {
-			ctx.AbortWithError(http.StatusBadRequest, errors.New("Invalid status value"))
-			return
-		}
-		ctx.JSON(http.StatusOK, results)
+func (p PetController) FindByStatus(ctx *gin.Context) {
+	status := entity.PetStatus(ctx.Query("status"))
+	results, err := p.petUseCase.FindAllByStatus(status)
+	if err != nil {
+		ctx.AbortWithError(http.StatusBadRequest, err)
+		return
 	}
+	ctx.JSON(http.StatusOK, results)
 }

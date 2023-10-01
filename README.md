@@ -1,10 +1,9 @@
 # Golith [WIP]
 
-Golith is an opinionated template project that aims to ease the configuration and building of server-side
+Golith is an opinionated template library that aims to improve productivity in building server-side
 applications based on popular libraries written in Go. It aims to minimize the hassle of creating and configuring Go
-applications by providing examples, middlewares, utilities, pre-configurations, and integrations with popular libraries
-written in Go. It attempts to implement the Clean Architecture and the Twelve-Factor methodology in building Go-based
-applications.
+applications by providing examples, middlewares, utilities, default configurations, and integrations with popular libraries
+written in Go.
 
 ---
 
@@ -15,9 +14,6 @@ applications.
 - Database Connection with [go-gorm/gorm](https://github.com/go-gorm/gorm)
 - Document Generation with [swaggo/swag](https://github.com/swaggo/swag)
 - Dependency Injection with [uber-go/fx](https://github.com/uber-go/fx)
-
-Directory structure was inspired
-by [golang-standards/project-layout](https://github.com/golang-standards/project-layout).
 
 ## Questions
 

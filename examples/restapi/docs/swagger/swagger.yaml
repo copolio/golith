@@ -10,6 +10,10 @@ definitions:
     properties:
       category:
         $ref: '#/definitions/entity.Category'
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
       id:
         type: integer
       name:
@@ -24,6 +28,8 @@ definitions:
         items:
           $ref: '#/definitions/entity.Tag'
         type: array
+      updatedAt:
+        type: string
     type: object
   entity.PetStatus:
     enum:
@@ -53,6 +59,14 @@ definitions:
         type: integer
       timestamp:
         type: string
+    type: object
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
     type: object
 info:
   contact: {}

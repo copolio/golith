@@ -248,6 +248,12 @@ const docTemplate = `{
                 "category": {
                     "$ref": "#/definitions/entity.Category"
                 },
+                "createdAt": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "$ref": "#/definitions/gorm.DeletedAt"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -268,6 +274,9 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/entity.Tag"
                     }
+                },
+                "updatedAt": {
+                    "type": "string"
                 }
             }
         },
@@ -310,6 +319,18 @@ const docTemplate = `{
                 },
                 "timestamp": {
                     "type": "string"
+                }
+            }
+        },
+        "gorm.DeletedAt": {
+            "type": "object",
+            "properties": {
+                "time": {
+                    "type": "string"
+                },
+                "valid": {
+                    "description": "Valid is true if Time is not NULL",
+                    "type": "boolean"
                 }
             }
         }

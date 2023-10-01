@@ -31,6 +31,6 @@ var Module = fx.Module("restapi",
 		),
 	),
 	fx.Invoke(func(engine *gin.Engine, router *router.V2Router) {
-		router.SetV2Routes(engine)
+		router.SetRoutes(engine)
 	}),
 )
