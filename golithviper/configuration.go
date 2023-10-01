@@ -7,6 +7,7 @@ import (
 	"github.com/copolio/golith/golithgorm"
 	"github.com/copolio/golith/golithswag"
 	"github.com/spf13/viper"
+	"go.uber.org/fx"
 	"log"
 )
 
@@ -17,8 +18,11 @@ func LoadConfiguration() (*golithgorm.Configuration, *golithgin.Configuration, *
 	viper.SetConfigType("yaml")     // REQUIRED if the config file does not have the extension in the name
 	viper.AddConfigPath("/config/") // path to look for the config file in
 	viper.AddConfigPath(".")        // optionally look for config in the working directory
-	err := viper.ReadInConfig()     // Find and read the config file
-	if err != nil {                 // Handle errors reading the config file
+	viper.SetDefault("gorm", golithgorm.DefaultConfiguration())
+	viper.SetDefault("gin", golithgin.DefaultConfiguration())
+	viper.SetDefault("swagger", golithswag.DefaultConfiguration())
+	err := viper.ReadInConfig() // Find and read the config file
+	if err != nil {             // Handle errors reading the config file
 		panic(fmt.Errorf("fatal error config file: %w", err))
 	}
 	err = viper.Unmarshal(&config)
@@ -27,4 +31,8 @@ func LoadConfiguration() (*golithgorm.Configuration, *golithgin.Configuration, *
 	}
 
 	return &config.Gorm, &config.Gin, &config.Swagger
+}
+
+func Use() fx.Option {
+	return fx.Provide(LoadConfiguration)
 }
