@@ -2,9 +2,9 @@ package entity
 
 import "gorm.io/gorm"
 
-type Tag struct {
+type PhotoUrl struct {
 	gorm.Model
-	Name  string
-	PetID int
+	PetID uint
 	Pet   Pet
+	Url   string
 }

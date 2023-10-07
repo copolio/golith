@@ -1,22 +1,33 @@
 package dto
 
-import (
-	"github.com/copolio/golith/internal/petstore/entity"
-	"mime/multipart"
-)
+import "github.com/copolio/golith/internal/petstore/entity"
 
-type UploadPetImage struct {
-	AdditionalMetaData string                `form:"additionalMetaData"`
-	File               *multipart.FileHeader `form:"file"`
-}
-
-type UploadPetImageResult struct {
-	Code    uint
-	Type    string
-	Message string
+type CreatePet struct {
+	Id       uint `json:"id"`
+	Category struct {
+		Id   uint   `json:"id"`
+		Name string `json:"name"`
+	} `json:"category"`
+	Name      string   `json:"name"`
+	PhotoUrls []string `json:"photoUrls"`
+	Tags      []struct {
+		Id   uint   `json:"id"`
+		Name string `json:"name"`
+	} `json:"tags"`
+	Status entity.PetStatus `json:"status"`
 }
 
 type UpdatePet struct {
-	Name   string           `form:"name"`
-	Status entity.PetStatus `form:"status"`
+	Id       uint `json:"id"`
+	Category struct {
+		Id   uint   `json:"id"`
+		Name string `json:"name"`
+	} `json:"category"`
+	Name      string   `json:"name"`
+	PhotoUrls []string `json:"photoUrls"`
+	Tags      []struct {
+		Id   uint   `json:"id"`
+		Name string `json:"name"`
+	} `json:"tags"`
+	Status entity.PetStatus `json:"status"`
 }

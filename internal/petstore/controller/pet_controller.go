@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/copolio/golith/golithgin"
+	"github.com/copolio/golith/internal/petstore/dto"
 	"github.com/copolio/golith/internal/petstore/entity"
 	"github.com/copolio/golith/internal/petstore/service"
 	"github.com/gin-gonic/gin"
@@ -26,12 +27,12 @@ func NewPetController(petUseCase service.PetUseCase) *PetController {
 // @Description  Adds a new pet to the store
 // @Accept       json
 // @Produce      json
-// @Param        body body      entity.Pet  true  "Pet object that needs to be added to the store"
-// @Success      200  {object}  entity.Pet
+// @Param        body body      dto.CreatePet  true  "Pet object that needs to be added to the store"
+// @Success      201  {object}  entity.Pet
 // @Failure      405  {object}  golithgin.HttpError "Invalid input"
 // @Router       /v2/pets [post]
 func (p PetController) Create(ctx *gin.Context) {
-	request := entity.Pet{}
+	request := dto.CreatePet{}
 	if err := ctx.ShouldBindBodyWith(&request, binding.JSON); err != nil {
 		ctx.Error(err)
 		return
@@ -46,7 +47,7 @@ func (p PetController) Create(ctx *gin.Context) {
 		})
 		return
 	}
-	ctx.JSON(http.StatusOK, response)
+	ctx.JSON(http.StatusCreated, response)
 }
 
 // Update
@@ -54,18 +55,29 @@ func (p PetController) Create(ctx *gin.Context) {
 // @Description  Update an existing pet
 // @Accept       json
 // @Produce      json
-// @Param        body body      entity.Pet  true  "Pet object that needs to be added to the store"
+// @Param        body body      dto.UpdatePet  true  "Pet object that needs to be added to the store"
 // @Success      200  {object}  entity.Pet
 // @Failure      400  {object}  golithgin.HttpError "Invalid ID supplied"
 // @Failure      404  {object}  golithgin.HttpError "Pet not found"
 // @Failure      405  {object}  golithgin.HttpError "Validation exception"
 // @Router       /v2/pets [put]
 func (p PetController) Update(ctx *gin.Context) {
-	request := entity.Pet{}
+	request := dto.UpdatePet{}
 	if err := ctx.ShouldBindBodyWith(&request, binding.JSON); err != nil {
 		ctx.Error(err)
 		return
 	}
+	response, err := p.petUseCase.UpdatePet(request)
+	if err != nil {
+		ctx.Error(golithgin.HttpError{
+			Timestamp: time.Now(),
+			Status:    http.StatusMethodNotAllowed,
+			Meta:      err,
+			Message:   "Invalid input",
+		})
+		return
+	}
+	ctx.JSON(http.StatusOK, response)
 }
 
 // Delete

@@ -15,7 +15,7 @@ import (
 	"gorm.io/gorm"
 )
 
-var Module = fx.Module("restapi",
+var Module = fx.Module("petstore",
 	golithgin.Use(),
 	golithswag.Use(),
 	golithgorm.Use(),
@@ -35,10 +35,10 @@ var Module = fx.Module("restapi",
 	fx.Invoke(func(db *gorm.DB, conf *golithgorm.Configuration) {
 		golithgorm.Migrate(
 			db, conf,
-			&entity.Order{},
 			&entity.Pet{},
+			&entity.Category{},
+			&entity.PhotoUrl{},
 			&entity.Tag{},
-			&entity.User{},
 		)
 	}),
 	fx.Invoke(func(engine *gin.Engine, router *router.V2Router) {

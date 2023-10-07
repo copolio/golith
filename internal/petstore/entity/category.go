@@ -1,10 +1,8 @@
 package entity
 
-type Category struct {
-	Id   uint64 `json:"id"`
-	Name string `json:"name"`
-}
+import "gorm.io/gorm"
 
-func (c Category) GormDataType() string {
-	return "json"
+type Category struct {
+	gorm.Model
+	Name string `json:"name"`
 }

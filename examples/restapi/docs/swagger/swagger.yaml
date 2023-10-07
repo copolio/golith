@@ -1,15 +1,81 @@
 definitions:
-  entity.Category:
+  dto.CreatePet:
     properties:
+      category:
+        properties:
+          id:
+            type: integer
+          name:
+            type: string
+        type: object
       id:
         type: integer
       name:
+        type: string
+      photoUrls:
+        items:
+          type: string
+        type: array
+      status:
+        $ref: '#/definitions/entity.PetStatus'
+      tags:
+        items:
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+          type: object
+        type: array
+    type: object
+  dto.UpdatePet:
+    properties:
+      category:
+        properties:
+          id:
+            type: integer
+          name:
+            type: string
+        type: object
+      id:
+        type: integer
+      name:
+        type: string
+      photoUrls:
+        items:
+          type: string
+        type: array
+      status:
+        $ref: '#/definitions/entity.PetStatus'
+      tags:
+        items:
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+          type: object
+        type: array
+    type: object
+  entity.Category:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: integer
+      name:
+        type: string
+      updatedAt:
         type: string
     type: object
   entity.Pet:
     properties:
       category:
         $ref: '#/definitions/entity.Category'
+      categoryID:
+        type: integer
       createdAt:
         type: string
       deletedAt:
@@ -20,7 +86,7 @@ definitions:
         type: string
       photoUrls:
         items:
-          type: string
+          $ref: '#/definitions/entity.PhotoUrl'
         type: array
       status:
         $ref: '#/definitions/entity.PetStatus'
@@ -41,11 +107,38 @@ definitions:
     - AVAILABLE
     - PENDING
     - SOLD
+  entity.PhotoUrl:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: integer
+      pet:
+        $ref: '#/definitions/entity.Pet'
+      petID:
+        type: integer
+      updatedAt:
+        type: string
+      url:
+        type: string
+    type: object
   entity.Tag:
     properties:
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
       id:
         type: integer
       name:
+        type: string
+      pet:
+        $ref: '#/definitions/entity.Pet'
+      petID:
+        type: integer
+      updatedAt:
         type: string
     type: object
   golithgin.HttpError:
@@ -85,12 +178,12 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/entity.Pet'
+          $ref: '#/definitions/dto.CreatePet'
       produces:
       - application/json
       responses:
-        "200":
-          description: OK
+        "201":
+          description: Created
           schema:
             $ref: '#/definitions/entity.Pet'
         "405":
@@ -108,7 +201,7 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/entity.Pet'
+          $ref: '#/definitions/dto.UpdatePet'
       produces:
       - application/json
       responses:

@@ -3,7 +3,7 @@ gin:
   port: 8080
 gorm:
   datasource:
-    ddl: CREATE
+    ddl: MIGRATE
     host: "localhost:3306"
     protocol: "tcp"
     schema: "petstore"

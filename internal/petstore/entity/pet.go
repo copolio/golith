@@ -16,9 +16,10 @@ const (
 
 type Pet struct {
 	gorm.Model
-	Category  Category
-	Name      string
-	PhotoUrls string
-	Tags      []Tag
-	Status    PetStatus
+	CategoryID uint
+	Category   Category
+	Name       string
+	PhotoUrls  []PhotoUrl
+	Tags       []Tag
+	Status     PetStatus
 }
