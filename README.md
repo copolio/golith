@@ -1,15 +1,16 @@
 # Golith [WIP]
 
-Golith is an opinionated template library that aims to improve productivity in building server-side
+Golith is a boilerplate project that aims to improve productivity in building server-side
 applications based on popular libraries written in Go. It aims to minimize the hassle of creating and configuring Go
 applications by providing examples, middlewares, utilities, default configurations, and integrations with popular libraries
 written in Go.
 
 ---
 
-## Features
+## Currently using following projects
 
 - HTTP routing with [gin-gonic/gin](https://github.com/gin-gonic/gin)
+  - Logging with [gin-contrib/zap](https://github.com/gin-contrib/zap)
 - Configuration with [spf13/viper](https://github.com/spf13/viper)
 - Database Connection with [go-gorm/gorm](https://github.com/go-gorm/gorm)
 - Document Generation with [swaggo/swag](https://github.com/swaggo/swag)
