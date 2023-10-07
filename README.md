@@ -1,7 +1,7 @@
 # Golith [WIP]
 
-Boilerplate project for Go web application with examples, middlewares, utilities, default configurations, and
-integrations with popular libraries written in Go.
+Boilerplate project for web application implementing Clean Architecture with examples, middlewares, utilities, default
+configurations, and integrations with popular libraries written in Go.
 
 ---
 
