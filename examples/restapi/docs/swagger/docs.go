@@ -16,7 +16,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/v2/pets": {
+        "/pets": {
             "put": {
                 "description": "Update an existing pet",
                 "consumes": [
@@ -24,6 +24,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "pet"
                 ],
                 "summary": "Update an existing pet",
                 "parameters": [
@@ -72,6 +75,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "pet"
+                ],
                 "summary": "Adds a new pet to the store",
                 "parameters": [
                     {
@@ -100,7 +106,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v2/pets/findByStatus": {
+        "/pets/findByStatus": {
             "get": {
                 "description": "Multiple status values can be provided with comma separated strings",
                 "consumes": [
@@ -108,6 +114,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "pet"
                 ],
                 "summary": "Finds Pets by status",
                 "parameters": [
@@ -149,7 +158,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v2/pets/{petId}": {
+        "/pets/{petId}": {
             "get": {
                 "description": "Returns a single pet",
                 "consumes": [
@@ -157,6 +166,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "pet"
                 ],
                 "summary": "Find pet by ID",
                 "parameters": [
@@ -196,6 +208,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "pet"
                 ],
                 "summary": "Deletes a pet",
                 "parameters": [
@@ -477,14 +492,20 @@ const docTemplate = `{
                 }
             }
         }
-    }
+    },
+    "tags": [
+        {
+            "description": "Everything about your Pets",
+            "name": "pet"
+        }
+    ]
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
 	Host:             "",
-	BasePath:         "",
+	BasePath:         "/v2",
 	Schemes:          []string{},
 	Title:            "Pet Store Example API",
 	Description:      "This is a sample server.",

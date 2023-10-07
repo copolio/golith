@@ -6,8 +6,9 @@
         "contact": {},
         "version": "1.0"
     },
+    "basePath": "/v2",
     "paths": {
-        "/v2/pets": {
+        "/pets": {
             "put": {
                 "description": "Update an existing pet",
                 "consumes": [
@@ -15,6 +16,9 @@
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "pet"
                 ],
                 "summary": "Update an existing pet",
                 "parameters": [
@@ -63,6 +67,9 @@
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "pet"
+                ],
                 "summary": "Adds a new pet to the store",
                 "parameters": [
                     {
@@ -91,7 +98,7 @@
                 }
             }
         },
-        "/v2/pets/findByStatus": {
+        "/pets/findByStatus": {
             "get": {
                 "description": "Multiple status values can be provided with comma separated strings",
                 "consumes": [
@@ -99,6 +106,9 @@
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "pet"
                 ],
                 "summary": "Finds Pets by status",
                 "parameters": [
@@ -140,7 +150,7 @@
                 }
             }
         },
-        "/v2/pets/{petId}": {
+        "/pets/{petId}": {
             "get": {
                 "description": "Returns a single pet",
                 "consumes": [
@@ -148,6 +158,9 @@
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "pet"
                 ],
                 "summary": "Find pet by ID",
                 "parameters": [
@@ -187,6 +200,9 @@
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "pet"
                 ],
                 "summary": "Deletes a pet",
                 "parameters": [
@@ -468,5 +484,11 @@
                 }
             }
         }
-    }
+    },
+    "tags": [
+        {
+            "description": "Everything about your Pets",
+            "name": "pet"
+        }
+    ]
 }

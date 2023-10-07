@@ -1,3 +1,4 @@
+basePath: /v2
 definitions:
   dto.CreatePet:
     properties:
@@ -167,7 +168,7 @@ info:
   title: Pet Store Example API
   version: "1.0"
 paths:
-  /v2/pets:
+  /pets:
     post:
       consumes:
       - application/json
@@ -191,6 +192,8 @@ paths:
           schema:
             $ref: '#/definitions/golithgin.HttpError'
       summary: Adds a new pet to the store
+      tags:
+      - pet
     put:
       consumes:
       - application/json
@@ -222,7 +225,9 @@ paths:
           schema:
             $ref: '#/definitions/golithgin.HttpError'
       summary: Update an existing pet
-  /v2/pets/{petId}:
+      tags:
+      - pet
+  /pets/{petId}:
     delete:
       consumes:
       - application/json
@@ -249,6 +254,8 @@ paths:
           schema:
             $ref: '#/definitions/golithgin.HttpError'
       summary: Deletes a pet
+      tags:
+      - pet
     get:
       consumes:
       - application/json
@@ -275,7 +282,9 @@ paths:
           schema:
             $ref: '#/definitions/golithgin.HttpError'
       summary: Find pet by ID
-  /v2/pets/findByStatus:
+      tags:
+      - pet
+  /pets/findByStatus:
     get:
       consumes:
       - application/json
@@ -308,4 +317,9 @@ paths:
           schema:
             $ref: '#/definitions/golithgin.HttpError'
       summary: Finds Pets by status
+      tags:
+      - pet
 swagger: "2.0"
+tags:
+- description: Everything about your Pets
+  name: pet
