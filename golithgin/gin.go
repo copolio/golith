@@ -38,9 +38,3 @@ func NewGin(lc fx.Lifecycle, conf *Configuration) *gin.Engine {
 func Use() fx.Option {
 	return fx.Provide(NewGin)
 }
-
-func Run() fx.Option {
-	return fx.Invoke(func(r *gin.Engine, conf *Configuration) {
-		r.Run(fmt.Sprintf(":%d", conf.Port))
-	})
-}
