@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/copolio/golith"
-	_ "github.com/copolio/golith/examples/restapi/docs/swagger"
-	"github.com/copolio/golith/internal/petstore"
+	_ "github.com/copolio/golith/examples/petstore/cmd/restapi/docs/swagger"
+	"github.com/copolio/golith/examples/petstore/internal/petstore"
 )
 
 // @title           Pet Store Example API

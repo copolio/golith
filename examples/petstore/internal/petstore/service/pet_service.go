@@ -1,17 +1,17 @@
 package service
 
 import (
-	"github.com/copolio/golith/internal/petstore/dto"
-	"github.com/copolio/golith/internal/petstore/entity"
-	"github.com/copolio/golith/internal/petstore/repository"
+	"github.com/copolio/golith/examples/petstore/internal/petstore/dto"
+	entity2 "github.com/copolio/golith/examples/petstore/internal/petstore/entity"
+	"github.com/copolio/golith/examples/petstore/internal/petstore/repository"
 	"gorm.io/gorm"
 )
 
 type PetUseCase interface {
-	AddPet(request dto.CreatePet) (entity.Pet, error)
-	UpdatePet(request dto.UpdatePet) (entity.Pet, error)
-	FindAllByStatus(status entity.PetStatus) ([]entity.Pet, error)
-	FindById(petId uint64) (entity.Pet, error)
+	AddPet(request dto.CreatePet) (entity2.Pet, error)
+	UpdatePet(request dto.UpdatePet) (entity2.Pet, error)
+	FindAllByStatus(status entity2.PetStatus) ([]entity2.Pet, error)
+	FindById(petId uint64) (entity2.Pet, error)
 	Delete(petId uint64) error
 }
 
@@ -27,11 +27,11 @@ func NewPetService(db *gorm.DB, petRepository repository.PetRepository) *PetServ
 	}
 }
 
-func (p PetService) AddPet(request dto.CreatePet) (entity.Pet, error) {
-	tags := make([]entity.Tag, len(request.Tags))
-	photoUrls := make([]entity.PhotoUrl, len(request.PhotoUrls))
+func (p PetService) AddPet(request dto.CreatePet) (entity2.Pet, error) {
+	tags := make([]entity2.Tag, len(request.Tags))
+	photoUrls := make([]entity2.PhotoUrl, len(request.PhotoUrls))
 	for idx, tag := range request.Tags {
-		tags[idx] = entity.Tag{
+		tags[idx] = entity2.Tag{
 			Model: gorm.Model{
 				ID: tag.Id,
 			},
@@ -39,12 +39,12 @@ func (p PetService) AddPet(request dto.CreatePet) (entity.Pet, error) {
 		}
 	}
 	for idx, photoUrl := range request.PhotoUrls {
-		photoUrls[idx] = entity.PhotoUrl{
+		photoUrls[idx] = entity2.PhotoUrl{
 			Url: photoUrl,
 		}
 	}
-	pet := entity.Pet{
-		Category: entity.Category{
+	pet := entity2.Pet{
+		Category: entity2.Category{
 			Model: gorm.Model{
 				ID: request.Category.Id,
 			},
@@ -62,11 +62,11 @@ func (p PetService) AddPet(request dto.CreatePet) (entity.Pet, error) {
 	return pet, err
 }
 
-func (p PetService) UpdatePet(request dto.UpdatePet) (entity.Pet, error) {
-	tags := make([]entity.Tag, len(request.Tags))
-	photoUrls := make([]entity.PhotoUrl, len(request.PhotoUrls))
+func (p PetService) UpdatePet(request dto.UpdatePet) (entity2.Pet, error) {
+	tags := make([]entity2.Tag, len(request.Tags))
+	photoUrls := make([]entity2.PhotoUrl, len(request.PhotoUrls))
 	for idx, tag := range request.Tags {
-		tags[idx] = entity.Tag{
+		tags[idx] = entity2.Tag{
 			Model: gorm.Model{
 				ID: tag.Id,
 			},
@@ -74,12 +74,12 @@ func (p PetService) UpdatePet(request dto.UpdatePet) (entity.Pet, error) {
 		}
 	}
 	for idx, photoUrl := range request.PhotoUrls {
-		photoUrls[idx] = entity.PhotoUrl{
+		photoUrls[idx] = entity2.PhotoUrl{
 			Url: photoUrl,
 		}
 	}
-	pet := entity.Pet{
-		Category: entity.Category{
+	pet := entity2.Pet{
+		Category: entity2.Category{
 			Model: gorm.Model{
 				ID: request.Category.Id,
 			},
@@ -97,11 +97,11 @@ func (p PetService) UpdatePet(request dto.UpdatePet) (entity.Pet, error) {
 	return pet, err
 }
 
-func (p PetService) FindAllByStatus(status entity.PetStatus) ([]entity.Pet, error) {
-	return p.petRepository.FindAll(p.db, entity.Pet{Status: status})
+func (p PetService) FindAllByStatus(status entity2.PetStatus) ([]entity2.Pet, error) {
+	return p.petRepository.FindAll(p.db, entity2.Pet{Status: status})
 }
 
-func (p PetService) FindById(petId uint64) (entity.Pet, error) {
+func (p PetService) FindById(petId uint64) (entity2.Pet, error) {
 	return p.petRepository.FindById(p.db, petId)
 }
 

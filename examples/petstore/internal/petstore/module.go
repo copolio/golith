@@ -1,15 +1,15 @@
 package petstore
 
 import (
+	"github.com/copolio/golith/examples/petstore/internal/petstore/controller"
+	entity2 "github.com/copolio/golith/examples/petstore/internal/petstore/entity"
+	"github.com/copolio/golith/examples/petstore/internal/petstore/repository"
+	"github.com/copolio/golith/examples/petstore/internal/petstore/router"
+	"github.com/copolio/golith/examples/petstore/internal/petstore/service"
 	"github.com/copolio/golith/golithgin"
 	"github.com/copolio/golith/golithgorm"
 	"github.com/copolio/golith/golithswag"
 	"github.com/copolio/golith/golithviper"
-	"github.com/copolio/golith/internal/petstore/controller"
-	"github.com/copolio/golith/internal/petstore/entity"
-	"github.com/copolio/golith/internal/petstore/repository"
-	"github.com/copolio/golith/internal/petstore/router"
-	"github.com/copolio/golith/internal/petstore/service"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/fx"
 	"gorm.io/gorm"
@@ -35,10 +35,10 @@ var Module = fx.Module("petstore",
 	fx.Invoke(func(db *gorm.DB, conf *golithgorm.Configuration) {
 		golithgorm.Migrate(
 			db, conf,
-			&entity.Pet{},
-			&entity.Category{},
-			&entity.PhotoUrl{},
-			&entity.Tag{},
+			&entity2.Pet{},
+			&entity2.Category{},
+			&entity2.PhotoUrl{},
+			&entity2.Tag{},
 		)
 	}),
 	fx.Invoke(func(engine *gin.Engine, router *router.V2Router) {

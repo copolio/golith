@@ -1,7 +1,7 @@
 package router
 
 import (
-	"github.com/copolio/golith/internal/petstore/controller"
+	"github.com/copolio/golith/examples/petstore/internal/petstore/controller"
 	"github.com/gin-gonic/gin"
 )
 

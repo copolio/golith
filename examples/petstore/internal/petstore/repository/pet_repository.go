@@ -1,8 +1,8 @@
 package repository
 
 import (
+	"github.com/copolio/golith/examples/petstore/internal/petstore/entity"
 	"github.com/copolio/golith/golithgorm"
-	"github.com/copolio/golith/internal/petstore/entity"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )

@@ -1,6 +1,8 @@
 package dto
 
-import "github.com/copolio/golith/internal/petstore/entity"
+import (
+	"github.com/copolio/golith/examples/petstore/internal/petstore/entity"
+)
 
 type CreatePet struct {
 	Id       uint `json:"id"`

@@ -3,10 +3,10 @@ package controller
 import (
 	"errors"
 	"fmt"
+	"github.com/copolio/golith/examples/petstore/internal/petstore/dto"
+	"github.com/copolio/golith/examples/petstore/internal/petstore/entity"
+	"github.com/copolio/golith/examples/petstore/internal/petstore/service"
 	"github.com/copolio/golith/golithgin"
-	"github.com/copolio/golith/internal/petstore/dto"
-	"github.com/copolio/golith/internal/petstore/entity"
-	"github.com/copolio/golith/internal/petstore/service"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"net/http"
